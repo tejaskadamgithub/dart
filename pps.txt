@@ -1,0 +1,222 @@
+*****(PWA Program Statement)*****
+
+1. Write manifest.json file and include it in the website.
+
+1) put the given "icons" folder inside "img" folder.
+
+2) paste the following code inside <head> tag of every .html file of your project:
+
+	<link rel="manifest" href="/manifest.json">
+
+3) create "manifest.json" file in root folder and paste the following code in it.
+*manifest.json :
+
+{
+  "name": "Food Ninja",
+  "short_name": "FoodNinja",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#FFE9D2",
+  "theme_color": "#FFE1C4",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/img/icons/icon-72x72.png",
+      "type": "image/png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "/img/icons/icon-96x96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "/img/icons/icon-128x128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "/img/icons/icon-144x144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "/img/icons/icon-152x152.png",
+      "type": "image/png",
+      "sizes": "152x152"
+    },
+    {
+      "src": "/img/icons/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/img/icons/icon-384x384.png",
+      "type": "image/png",
+      "sizes": "384x384"
+    },
+    {
+      "src": "/img/icons/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+2. Write,register, install and activate a service worker file and include it in the website.
+
+1) create "app.js" file inside "js" folder and paste the following code in it:
+
+if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('service worker registered'))
+      .catch(err => console.log('service worker not registered', err));
+  }
+
+2) create "sw.js" file in root folder and paste the following code in it:
+
+  // install event
+  self.addEventListener('install', evt => {
+    console.log('service worker installed');
+  });
+  
+  // activate event
+  self.addEventListener('activate', evt => {
+    console.log('service worker activated');
+  });
+  
+  // fetch event
+  self.addEventListener('fetch', evt => {
+    console.log('fetch event', evt);
+  });
+  
+
+3) paste the following code inside <body> tag(at the end) of each html file:
+
+	 <script src="/js/app.js"></script>
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+3. Write a code for static caching in the service worker file and include it in the website.
+
+1) create "app.js" file inside "js" folder and paste the following code in it:
+
+if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('service worker registered'))
+      .catch(err => console.log('service worker not registered', err));
+  }
+
+2) create "sw.js" file in root folder and paste the following code in it:
+
+const staticCacheName = 'site-static';
+const assets = [
+  '/index.html',
+  '/pages/about.html',
+  '/pages/contact.html'
+  
+];
+
+// install event
+self.addEventListener('install', evt => {
+  //console.log('service worker installed');
+  evt.waitUntil(
+    caches.open(staticCacheName).then((cache) => {
+      console.log('caching shell assets');
+      cache.addAll(assets);
+    })
+  );
+});
+
+// activate event
+self.addEventListener('activate', evt => {
+  //console.log('service worker activated');
+});
+
+// fetch event
+self.addEventListener('fetch', evt => {
+  //console.log('fetch event', evt);
+  evt.respondWith(
+    caches.match(evt.request).then(cacheRes => {
+      return cacheRes || fetch(evt.request);
+    })
+  );
+});
+
+
+3) paste the following code inside <body> tag(at the end) of each html file:
+
+	 <script src="/js/app.js"></script>
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+4. Write a code for dynamic caching in the service worker file and include it in the website.
+
+1) create "app.js" file inside "js" folder and paste the following code in it:
+
+if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('service worker registered'))
+      .catch(err => console.log('service worker not registered', err));
+  }
+
+
+2) create "sw.js" file in root folder and paste the following code in it:
+
+const dynamicCacheName = 'site-dynamic-v1';
+// install event
+self.addEventListener('install', evt => {
+  console.log('service worker installed');
+});
+
+// activate event
+self.addEventListener('activate', evt => {
+  console.log('service worker activated');
+});
+
+// fetch event
+self.addEventListener('fetch', evt => {
+  //console.log('fetch event', evt);
+  evt.respondWith(
+    caches.match(evt.request).then(cacheRes => {
+      return cacheRes || fetch(evt.request).then(fetchRes => {
+        return caches.open(dynamicCacheName).then(cache => {
+          cache.put(evt.request.url, fetchRes.clone());
+          return fetchRes;
+        })
+      });
+    })
+  );
+});
+
+
+3) paste the following code inside <body> tag(at the end) of each html file:
+
+	 <script src="/js/app.js"></script>
