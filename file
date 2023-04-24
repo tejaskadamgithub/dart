@@ -2,34 +2,51 @@
 
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
+//This example explains implementation of Gesture on view of App
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: Text('Gesture Demo')),
-        body: Center(
-          child: GestureDetector(
-            onTap: () {
-              print('Tap detected');
-            },
-            child: Container(
-              width: 120.0,
-              height: 60.0,
-              padding: EdgeInsets.all(10.0),
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              child: Center(child: Text('click me')),
-            ),
-          ),
-        ),
+      title: 'Flutter Demo Application',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
       ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  MyHomePageState createState() => new MyHomePageState();
+}
+
+class MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text('Gestures Example'),
+        centerTitle: true,
+      ),
+      body: new Center(
+          child: GestureDetector(
+              onTap: () {
+                print('Box Clicked');
+              },
+              child: Container(
+                height: 60.0,
+                width: 120.0,
+                padding: EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  color: Colors.blueGrey,
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: Center(child: Text('Click Me')),
+              ))),
     );
   }
 }
@@ -214,42 +231,116 @@ class MyApp extends StatelessWidget {
  ------------------------------------------------------------------------------------------------------------------------------------------
 //18 Use RichText Widget in flutter App development
 
-
-//19 Use Container Widget in flutter App development.
 import 'package:flutter/material.dart';
 
+//This example exlains RichText Widget
 void main() {
-  runApp(ContainerExample());
+  runApp(MyApp());
 }
 
-class ContainerExample extends StatelessWidget {
+class MyApp extends StatelessWidget {
+// This widget is
+//the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Container Example'),
-        ),
-        body: Container(
-          color: Colors.blue,
-          width: 200,
-          height: 200,
-          child: Center(
-            child: Text(
-              'Hello, Container!',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
+      title: 'ClipOval',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      home: MyHomePAGE(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
+class MyHomePAGE extends StatefulWidget {
+  @override
+  _MyHomePAGEState createState() => _MyHomePAGEState();
+}
+
+class _MyHomePAGEState extends State<MyHomePAGE> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('FAMTIT'),
+        backgroundColor: Colors.green,
+      ),
+      body: Center(
+          child: RichText(
+        text: TextSpan(
+          text: 'Hello ',
+          style: DefaultTextStyle.of(context).style,
+          children: <TextSpan>[
+            TextSpan(
+                text: 'FAMT', style: TextStyle(fontWeight: FontWeight.bold)),
+          ],
+        ),
+      )),
+      backgroundColor: Colors.lightBlue[50],
+    );
+  }
+}
+
+class MyClip extends CustomClipper<Rect> {
+  Rect getClip(Size size) {
+    return Rect.fromLTWH(0, 0, 100, 100);
+  }
+
+  bool shouldReclip(oldClipper) {
+    return false;
+  }
+}
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+//19 Use Container Widget in flutter App development.
+import 'package:flutter/material.dart';
+
+//Example for explaining Layout using Container
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'FAMT',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("IT Department"),
+        ),
+        body: SafeArea(
+          // Container implementation
+          child: Container(
+            height: 100.0,
+            width: 100.0,
+            color: Colors.green,
+          ),
+        ));
+  }
+}
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -349,7 +440,76 @@ class MyApp extends StatelessWidget {
   }
 }
 
+//OR
 
+import 'package:flutter/material.dart';
+
+//Example for explaining Layout using ListView
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'FAMT',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  // function returning List view widget
+  Widget _buildList() => ListView(
+        // name is a listTile widget which is defined below
+        children: [
+          name('james', 'thomas'),
+          name('Ajay', 'kumar'),
+          name('Arun', 'das'),
+          name('Roxie', 'St'),
+          name('Stanlee', 'jr'),
+          name('AMC', 'hales'),
+          Divider(),
+          name('Monty', "Chopra"),
+          name('Emmy', 'Ave'),
+          name('Chaitanya', ' kumar'),
+          name('Rio', 'St'),
+        ],
+      );
+
+// name is a function returning ListTile widget
+  ListTile name(String firstName, String lastName) => ListTile(
+        title: Text(firstName,
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 20,
+            )),
+        subtitle: Text(lastName),
+        leading: Icon(
+          Icons.arrow_back_ios,
+          color: Colors.blue[500],
+        ),
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("IT Department"),
+        ),
+        body: Center(child: _buildList()));
+  }
+}
 ----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -357,48 +517,65 @@ class MyApp extends StatelessWidget {
 
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+//Example for explaining Layout using Stackview
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Stack Example',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Stack Example'),
-        ),
-        body: Center(
-          child: Stack(
-            children: <Widget>[
-              Container(
-                width: 200,
-                height: 200,
-                color: Colors.blue,
-              ),
-              Container(
-                width: 150,
-                height: 150,
-                color: Colors.green,
-              ),
-              Container(
-                width: 100,
-                height: 100,
-                color: Colors.yellow,
-              ),
-              Container(
-                width: 50,
-                height: 50,
-                color: Colors.red,
-              ),
-            ],
-          ),
-        ),
+      title: 'FAMT',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
       ),
+      home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  // function returning List view widget
+
+// this function returns a stack widget
+  Widget _buildStack() => Stack(
+        alignment: const Alignment(0.6, 0.6),
+        children: [
+          Container(
+            width: 150,
+            height: 150,
+            decoration:
+                BoxDecoration(color: Colors.black45, shape: BoxShape.circle),
+            child: Center(
+              child: Text(
+                'Mia B',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("IT Department"),
+        ),
+        body: Center(child: _buildStack()));
+  }
+}
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //23 Use CardView Widget in flutter App development.
 
